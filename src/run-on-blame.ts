@@ -17,6 +17,9 @@ export async function runOnBlame(files: string[]): Promise<void> {
       core.getInput('phpcs_path', { required: true })
     );
 
+    const dontFailOnError =
+      core.getInput('fail_on_errors') == 'false' ||
+      core.getInput('fail_on_errors') === 'off';
     const dontFailOnWarning =
       core.getInput('fail_on_warnings') == 'false' ||
       core.getInput('fail_on_warnings') === 'off';
@@ -56,7 +59,8 @@ export async function runOnBlame(files: string[]): Promise<void> {
           // fail
           if (message.type === 'WARNING' && !dontFailOnWarning)
             core.setFailed(message.message);
-          else if (message.type === 'ERROR') core.setFailed(message.message);
+          else if (message.type === 'ERROR' && !dontFailOnError)
+            core.setFailed(message.message);
         }
       }
     }
