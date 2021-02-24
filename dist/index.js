@@ -3247,6 +3247,7 @@ const git_blame_json_1 = __webpack_require__(5);
 const path = __importStar(__webpack_require__(622));
 const core = __importStar(__webpack_require__(470));
 const github = __importStar(__webpack_require__(469));
+//import * as Webhooks from '@octokit/webhooks';
 async function runOnBlame(files) {
     var _a;
     try {
@@ -3266,8 +3267,6 @@ async function runOnBlame(files) {
                 return;
         }
         // blame files and output relevant errors
-        // const payload = github.context
-        //   .payload as Webhooks.EventPayloads.WebhookPayloadPullRequest;
         // get email of author of first commit in PR
         const authorEmail = child_process_1.execFileSync('git', ['--no-pager', 'log', '--format=%ae', `${github.context.sha}^!`], { encoding: 'utf8', windowsHide: true, timeout: 5000 }).trim();
         console.log('PR author email: %s', authorEmail);
@@ -3285,10 +3284,10 @@ async function runOnBlame(files) {
                     // output the problem
                     console.log('<error line="%d" column="%d" severity="%s" message="%s" source="%s"/>', message.line, message.column, message.type.toLowerCase(), message.message, message.source);
                     // fail
-                    if (message.type === 'WARNING' && !dontFailOnWarning)
-                        core.setFailed(message.message);
+                    /*if (message.type === 'WARNING' && !dontFailOnWarning)
+                      core.setFailed(message.message);
                     else if (message.type === 'ERROR' && !dontFailOnError)
-                        core.setFailed(message.message);
+                      core.setFailed(message.message);*/
                 }
             }
         }
