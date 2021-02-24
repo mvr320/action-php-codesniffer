@@ -66,6 +66,6 @@ export async function runOnBlame(files: string[]): Promise<void> {
     }
   } catch (err) {
     core.debug(err);
-    core.setFailed(err);
+    // core.setFailed(err);
   }
 }

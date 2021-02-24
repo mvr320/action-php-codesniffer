@@ -29,7 +29,7 @@ export function runOnCompleteFiles(files: string[]): number {
     return 0;
   } catch (err) {
     core.debug(err);
-    core.setFailed(err);
+    // core.setFailed(err);
     return 1;
   }
 }
